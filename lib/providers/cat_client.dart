@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 
 import '../models/cat.dart';
 
-part 'cat_service.g.dart';
+part 'cat_client.g.dart';
 
 @RestApi(baseUrl: 'https://cataas.com')
 abstract class CatClient {

@@ -1,5 +1,5 @@
 import 'package:cat_facts/models/fact.dart';
-import 'package:cat_facts/providers/fact_service.dart';
+import 'package:cat_facts/providers/fact_client.dart';
 import 'package:hive/hive.dart';
 
 abstract class FactRepository {
@@ -13,7 +13,7 @@ class FactRepositoryImplementation implements FactRepository {
 
   FactRepositoryImplementation({required this.restClient});
 
-  final _factBox = Hive.box<Map<String, dynamic>>('facts');
+  final _factBox = Hive.box<Fact>('facts');
 
   @override
   Future<Fact> fetchFactFromApi() async {
@@ -24,11 +24,7 @@ class FactRepositoryImplementation implements FactRepository {
   @override
   List<Fact> fetchFactsFromHive() {
     List<Fact> facts = [];
-
-    facts = _factBox.values.map((element) {
-      final fact = Fact.fromJson(element);
-      return fact;
-    }).toList();
+    facts = _factBox.values.toList();
 
     return facts;
   }
@@ -36,7 +32,7 @@ class FactRepositoryImplementation implements FactRepository {
   @override
   Future<void> saveFact(Fact fact) async {
     try {
-      await _factBox.add(fact.toJson());
+      await _factBox.add(fact);
     } catch (e) {
       await _factBox.deleteFromDisk();
     }

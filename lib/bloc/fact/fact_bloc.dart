@@ -1,4 +1,5 @@
 import 'package:cat_facts/repositories/fact_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -18,7 +19,13 @@ class FactBloc extends Bloc<FactEvent, FactState> {
         await factRepository.saveFact(fact);
         emit(FactLoaded(fact: fact));
       } catch (e) {
-        emit(const FactError('Error'));
+        String message;
+        if (e is DioError) {
+          message = 'Network error';
+        } else {
+          message = 'Unknown error';
+        }
+        emit(FactError(message));
       }
     });
     on<FetchFactsFromHive>((event, emit) async {

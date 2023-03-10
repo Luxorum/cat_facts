@@ -1,5 +1,5 @@
 import '../models/cat.dart';
-import '../providers/cat_service.dart';
+import '../providers/cat_client.dart';
 
 abstract class CatRepository {
   Future<Cat> getCat();

@@ -24,116 +24,121 @@ class _FactsScreenState extends State<FactsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 500,
-            height: 400,
-            child: Card(
-              margin: const EdgeInsets.all(10),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              elevation: 5.0,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  BlocBuilder<FactBloc, FactState>(
-                    builder: (context, state) {
-                      if (state is FactLoading) {
-                        return const SizedBox(
-                          width: 150,
-                          height: 150,
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      } else if (state is FactLoaded) {
-                        final fact = state.fact;
-                        return Container(
-                          padding: const EdgeInsets.all(10),
-                          width: 300,
-                          height: 150,
-                          child: Column(
-                            children: [
-                              Text('Created at ${fact.createdAt}'),
-                              SingleChildScrollView(
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
+      body: Builder(
+        builder: (context) {
+          final factState = context.watch<FactBloc>().state;
+          final catState = context.watch<CatBloc>().state;
+          if (factState is FactError) {
+            showMessage(
+              context,
+              message: factState.message,
+              messageType: MessageType.error,
+            );
+          }
+          if (catState is CatError) {
+            showMessage(
+              context,
+              message: catState.message,
+              messageType: MessageType.error,
+            );
+          }
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 500,
+                height: 400,
+                child: Card(
+                  margin: const EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 5.0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        if (factState is FactLoading) ...[
+                          const SizedBox(
+                            width: 150,
+                            height: 150,
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          )
+                        ] else if (factState is FactLoaded) ...[
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            width: 300,
+                            height: 150,
+                            child: Column(
+                              children: [
+                                Text('Created at ${factState.fact.createdAt}'),
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        factState.fact.fact,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                    fact.fact,
-                                    textAlign: TextAlign.center,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                      if (state is FactError) {
-                        showMessage(
-                          context,
-                          message: state.message,
-                          messageType: MessageType.error,
-                        );
-                      }
-                      return Container();
-                    },
+                              ],
+                            ),
+                          )
+                        ],
+                        if (catState is CatLoading) ...[
+                          const SizedBox(
+                            width: 200,
+                            height: 200,
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          )
+                        ] else if (catState is CatLoaded) ...[
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(
+                              maxHeight: 150,
+                              maxWidth: 150,
+                            ),
+                            child: FadeInImage.memoryNetwork(
+                              placeholder: kTransparentImage,
+                              image:
+                                  '$catImagesApiEndpoint/${catState.cat.url}',
+                            ),
+                          )
+                        ]
+                      ],
+                    ),
                   ),
-                  BlocBuilder<CatBloc, CatState>(
-                    builder: (context, state) {
-                      if (state is CatLoading) {
-                        return const SizedBox(
-                          width: 200,
-                          height: 200,
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }
-                      if (state is CatLoaded) {
-                        final cat = state.cat;
-                        return SizedBox(
-                          height: 200,
-                          child: FadeInImage.memoryNetwork(
-                            width: 180,
-                            placeholder: kTransparentImage,
-                            image: '$catImagesApiEndpoint/${cat.url}',
-                          ),
-                        );
-                      }
-                      if (state is CatError) {
-                        showMessage(
-                          context,
-                          message: state.message,
-                          messageType: MessageType.error,
-                        );
-                      }
-                      return Container();
-                    },
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: loadCatsImagesAndFacts,
-            child: const Text('Another fact'),
-          ),
-          ElevatedButton(
-            onPressed: () => {
-              Navigator.pushReplacementNamed(
-                context,
-                AppRoutes.factsHistoryScreen,
-              )
-            },
-            child: const Text('Fact history'),
-          ),
-        ],
+              ElevatedButton(
+                onPressed: factState is FactLoading || catState is CatLoading
+                    ? null
+                    : loadCatsImagesAndFacts,
+                child: const Text('Another fact'),
+              ),
+              ElevatedButton(
+                onPressed: factState is FactLoading || catState is CatLoading
+                    ? null
+                    : () => {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            AppRoutes.factsHistoryScreen,
+                          )
+                        },
+                child: const Text('Fact history'),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

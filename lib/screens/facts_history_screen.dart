@@ -36,21 +36,30 @@ class _FactsHistoryScreenState extends State<FactsHistoryScreen> {
         builder: (context, state) {
           if (state is FactLoading) {
             return const Center(child: CircularProgressIndicator());
-          }
-          if (state is FactsLoaded) {
+          } else if (state is FactsLoaded) {
             final facts = state.facts;
             return ListView.builder(
+              primary: false,
               itemCount: facts.length,
-              itemBuilder: (context, index) => ListTile(
-                key: facts[index].key,
-                leading: const Icon(Icons.favorite),
-                title: Text(facts[index].fact),
-                trailing:
-                    Text('Created at ${facts[index].createdAt.toLocal()}'),
+              itemBuilder: (context, index) => Card(
+                child: ListTile(
+                  key: Key(facts[index].key),
+                  leading: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.favorite),
+                    ],
+                  ),
+                  subtitle:
+                      Text('Created at ${facts[index].createdAt.toLocal()}'),
+                  title: Text(
+                    facts[index].fact,
+                  ),
+                ),
               ),
             );
-          }
-          if (state is FactError) {
+          } else if (state is FactError) {
             showMessage(
               context,
               message: state.message,
