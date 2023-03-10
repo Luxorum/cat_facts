@@ -15,7 +15,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await Hive.deleteFromDisk();
   await Hive.openBox<Map<String, dynamic>>('facts');
   runApp(const MyApp());
 }

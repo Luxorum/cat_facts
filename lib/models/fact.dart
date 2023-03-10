@@ -5,13 +5,15 @@ part 'fact.g.dart';
 
 @JsonSerializable()
 class Fact {
-  Fact({required this.fact, this.key}) {
+  Fact({required this.fact}) {
     key = UniqueKey();
+    createdAt = DateTime.now();
   }
 
   @JsonKey(name: 'fact')
   final String fact;
-  UniqueKey? key;
+  late DateTime createdAt;
+  late UniqueKey key;
 
   factory Fact.fromJson(Map<String, dynamic> json) => _$FactFromJson(json);
 
