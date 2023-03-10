@@ -44,6 +44,8 @@ class _FactsHistoryScreenState extends State<FactsHistoryScreen> {
                 key: Key(facts[index].key),
                 leading: const Icon(Icons.favorite),
                 title: Text(facts[index].fact),
+                trailing:
+                    Text('Created at ${facts[index].createdAt.toLocal()}'),
               ),
             );
           } else if (state is FactError) {

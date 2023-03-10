@@ -55,17 +55,22 @@ class _FactsScreenState extends State<FactsScreen> {
                           padding: const EdgeInsets.all(10),
                           width: 300,
                           height: 150,
-                          child: SingleChildScrollView(
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                          child: Column(
+                            children: [
+                              Text('Created at ${fact.createdAt}'),
+                              SingleChildScrollView(
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    fact.fact,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
-                                fact.fact,
-                                textAlign: TextAlign.center,
                               ),
-                            ),
+                            ],
                           ),
                         );
                       }

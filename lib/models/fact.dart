@@ -7,12 +7,13 @@ part 'fact.g.dart';
 class Fact {
   Fact({required this.fact}) {
     key = UniqueKey().toString();
+    createdAt = DateTime.now();
   }
 
   @JsonKey(name: 'fact')
   final String fact;
-
   late String key;
+  late DateTime createdAt;
 
   factory Fact.fromJson(Map<String, dynamic> json) => _$FactFromJson(json);
 
