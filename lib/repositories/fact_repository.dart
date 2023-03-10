@@ -1,5 +1,5 @@
 import 'package:cat_facts/models/fact.dart';
-import 'package:cat_facts/providers/fact_service.dart';
+import 'package:cat_facts/providers/fact_client.dart';
 import 'package:hive/hive.dart';
 
 abstract class FactRepository {

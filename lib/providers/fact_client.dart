@@ -2,7 +2,7 @@ import 'package:cat_facts/models/fact.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
-part 'fact_service.g.dart';
+part 'fact_client.g.dart';
 
 @RestApi(baseUrl: 'https://catfact.ninja')
 abstract class FactClient {

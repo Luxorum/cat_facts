@@ -42,7 +42,7 @@ class _FactsHistoryScreenState extends State<FactsHistoryScreen> {
             return ListView.builder(
               itemCount: facts.length,
               itemBuilder: (context, index) => ListTile(
-                key: facts[index].key,
+                key: Key(facts[index].key),
                 leading: const Icon(Icons.favorite),
                 title: Text(facts[index].fact),
               ),

@@ -1,7 +1,7 @@
 import 'package:cat_facts/bloc/cat/cat_bloc.dart';
 import 'package:cat_facts/bloc/fact/fact_bloc.dart';
-import 'package:cat_facts/providers/cat_service.dart';
-import 'package:cat_facts/providers/fact_service.dart';
+import 'package:cat_facts/providers/cat_client.dart';
+import 'package:cat_facts/providers/fact_client.dart';
 import 'package:cat_facts/repositories/cat_repository.dart';
 import 'package:cat_facts/repositories/fact_repository.dart';
 import 'package:cat_facts/routes.dart';
