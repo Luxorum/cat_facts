@@ -1,7 +1,6 @@
 name: PR Workflow
 on:
   pull_request:
-    types: [opened]
 jobs:
   Build-Android:
     runs-on: ubuntu-latest
@@ -17,4 +16,5 @@ jobs:
       - run: flutter pub get
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter analyze
+      - run: flutter test
       - run: flutter build apk
