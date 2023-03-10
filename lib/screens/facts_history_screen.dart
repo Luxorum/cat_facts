@@ -40,12 +40,22 @@ class _FactsHistoryScreenState extends State<FactsHistoryScreen> {
             final facts = state.facts;
             return ListView.builder(
               itemCount: facts.length,
-              itemBuilder: (context, index) => ListTile(
-                key: Key(facts[index].key),
-                leading: const Icon(Icons.favorite),
-                title: Text(facts[index].fact),
-                trailing:
-                    Text('Created at ${facts[index].createdAt.toLocal()}'),
+              itemBuilder: (context, index) => Card(
+                child: ListTile(
+                  key: Key(facts[index].key),
+                  leading: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.favorite),
+                    ],
+                  ),
+                  subtitle:
+                      Text('Created at ${facts[index].createdAt.toLocal()}'),
+                  title: Text(
+                    facts[index].fact,
+                  ),
+                ),
               ),
             );
           } else if (state is FactError) {

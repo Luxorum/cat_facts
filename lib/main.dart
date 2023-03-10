@@ -1,5 +1,6 @@
 import 'package:cat_facts/bloc/cat/cat_bloc.dart';
 import 'package:cat_facts/bloc/fact/fact_bloc.dart';
+import 'package:cat_facts/models/fact.dart';
 import 'package:cat_facts/providers/cat_client.dart';
 import 'package:cat_facts/providers/fact_client.dart';
 import 'package:cat_facts/repositories/cat_repository.dart';
@@ -15,7 +16,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await Hive.openBox<Map<String, dynamic>>('facts');
+  await Hive.deleteFromDisk();
+  Hive.registerAdapter(FactAdapter());
+  await Hive.openBox<Fact>('facts');
   runApp(const MyApp());
 }
 
