@@ -39,6 +39,7 @@ class _FactsHistoryScreenState extends State<FactsHistoryScreen> {
           } else if (state is FactsLoaded) {
             final facts = state.facts;
             return ListView.builder(
+              primary: false,
               itemCount: facts.length,
               itemBuilder: (context, index) => Card(
                 child: ListTile(
