@@ -4,6 +4,8 @@ import 'package:cat_facts/providers/cat_service.dart';
 import 'package:cat_facts/providers/fact_service.dart';
 import 'package:cat_facts/repositories/cat_repository.dart';
 import 'package:cat_facts/repositories/fact_repository.dart';
+import 'package:cat_facts/routes.dart';
+import 'package:cat_facts/screens/facts_history_screen.dart';
 import 'package:cat_facts/screens/facts_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +43,11 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        initialRoute: '/',
+        routes: {
+          AppRoutes.factsScreen: (context) => const FactsScreen(),
+          AppRoutes.factsHistoryScreen: (context) => const FactsHistoryScreen(),
+        },
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
