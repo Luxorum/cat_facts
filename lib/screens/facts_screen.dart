@@ -89,8 +89,7 @@ class _FactsScreenState extends State<FactsScreen> {
                             child: CircularProgressIndicator(),
                           ),
                         );
-                      }
-                      if (state is CatLoaded) {
+                      } else if (state is CatLoaded) {
                         final cat = state.cat;
                         return SizedBox(
                           height: 200,
@@ -100,8 +99,7 @@ class _FactsScreenState extends State<FactsScreen> {
                             image: '$catImagesApiEndpoint/${cat.url}',
                           ),
                         );
-                      }
-                      if (state is CatError) {
+                      } else if (state is CatError) {
                         showMessage(
                           context,
                           message: state.message,

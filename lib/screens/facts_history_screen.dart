@@ -36,8 +36,7 @@ class _FactsHistoryScreenState extends State<FactsHistoryScreen> {
         builder: (context, state) {
           if (state is FactLoading) {
             return const Center(child: CircularProgressIndicator());
-          }
-          if (state is FactsLoaded) {
+          } else if (state is FactsLoaded) {
             final facts = state.facts;
             return ListView.builder(
               itemCount: facts.length,
@@ -47,8 +46,7 @@ class _FactsHistoryScreenState extends State<FactsHistoryScreen> {
                 title: Text(facts[index].fact),
               ),
             );
-          }
-          if (state is FactError) {
+          } else if (state is FactError) {
             showMessage(
               context,
               message: state.message,
