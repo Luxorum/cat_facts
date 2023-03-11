@@ -14,15 +14,6 @@ class FactLoading extends FactState {
   List<Object> get props => [];
 }
 
-class FactLoaded extends FactState {
-  final Fact fact;
-
-  const FactLoaded({required this.fact});
-
-  @override
-  List<Object> get props => [fact];
-}
-
 class FactsLoaded extends FactState {
   final List<Fact> facts;
 

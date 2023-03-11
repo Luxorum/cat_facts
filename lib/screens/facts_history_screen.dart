@@ -1,5 +1,4 @@
 import 'package:cat_facts/bloc/fact/fact_bloc.dart';
-import 'package:cat_facts/routes.dart';
 import 'package:cat_facts/utils/shared/show_message.dart';
 import 'package:flutter/material.dart';
 
@@ -22,16 +21,7 @@ class _FactsHistoryScreenState extends State<FactsHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: BackButton(
-          onPressed: () => {
-            Navigator.pushReplacementNamed(
-              context,
-              AppRoutes.factsScreen,
-            )
-          },
-        ),
-      ),
+      appBar: AppBar(),
       body: BlocBuilder<FactBloc, FactState>(
         builder: (context, state) {
           if (state is FactLoading) {
