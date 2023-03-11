@@ -42,101 +42,106 @@ class _FactsScreenState extends State<FactsScreen> {
               messageType: MessageType.error,
             );
           }
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 500,
-                height: 400,
-                child: Card(
-                  margin: const EdgeInsets.all(10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  elevation: 5.0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        if (factState is FactLoading) ...[
-                          const SizedBox(
-                            width: 150,
-                            height: 150,
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                        ] else if (factState is FactLoaded) ...[
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            width: 300,
-                            height: 150,
-                            child: Column(
-                              children: [
-                                Text('Created at ${factState.fact.createdAt}'),
-                                Expanded(
-                                  child: SingleChildScrollView(
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
+          return SizedBox(
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 500,
+                  height: 400,
+                  child: Card(
+                    margin: const EdgeInsets.all(10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    elevation: 5.0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          if (factState is FactLoading) ...[
+                            const SizedBox(
+                              width: 150,
+                              height: 150,
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            )
+                          ] else if (factState is FactLoaded) ...[
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              width: 300,
+                              height: 150,
+                              child: Column(
+                                children: [
+                                  Text(
+                                      'Created at ${factState.fact.createdAt}'),
+                                  Expanded(
+                                    child: SingleChildScrollView(
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          factState.fact.fact,
+                                          textAlign: TextAlign.center,
                                         ),
-                                        factState.fact.fact,
-                                        textAlign: TextAlign.center,
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          )
+                                ],
+                              ),
+                            )
+                          ],
+                          if (catState is CatLoading) ...[
+                            const SizedBox(
+                              width: 200,
+                              height: 200,
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            )
+                          ] else if (catState is CatLoaded) ...[
+                            ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                maxHeight: 150,
+                                maxWidth: 150,
+                              ),
+                              child: FadeInImage.memoryNetwork(
+                                placeholder: kTransparentImage,
+                                image:
+                                    '$catImagesApiEndpoint/${catState.cat.url}',
+                              ),
+                            )
+                          ]
                         ],
-                        if (catState is CatLoading) ...[
-                          const SizedBox(
-                            width: 200,
-                            height: 200,
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                        ] else if (catState is CatLoaded) ...[
-                          ConstrainedBox(
-                            constraints: const BoxConstraints(
-                              maxHeight: 150,
-                              maxWidth: 150,
-                            ),
-                            child: FadeInImage.memoryNetwork(
-                              placeholder: kTransparentImage,
-                              image:
-                                  '$catImagesApiEndpoint/${catState.cat.url}',
-                            ),
-                          )
-                        ]
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              ElevatedButton(
-                onPressed: factState is FactLoading || catState is CatLoading
-                    ? null
-                    : loadCatsImagesAndFacts,
-                child: const Text('Another fact'),
-              ),
-              ElevatedButton(
-                onPressed: factState is FactLoading || catState is CatLoading
-                    ? null
-                    : () => {
-                          Navigator.pushReplacementNamed(
-                            context,
-                            AppRoutes.factsHistoryScreen,
-                          )
-                        },
-                child: const Text('Fact history'),
-              ),
-            ],
+                ElevatedButton(
+                  onPressed: factState is FactLoading || catState is CatLoading
+                      ? null
+                      : loadCatsImagesAndFacts,
+                  child: const Text('Another fact'),
+                ),
+                ElevatedButton(
+                  onPressed: factState is FactLoading || catState is CatLoading
+                      ? null
+                      : () => {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              AppRoutes.factsHistoryScreen,
+                            )
+                          },
+                  child: const Text('Fact history'),
+                ),
+              ],
+            ),
           );
         },
       ),
