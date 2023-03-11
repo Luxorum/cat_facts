@@ -70,7 +70,7 @@ class _FactsScreenState extends State<FactsScreen> {
                                 child: CircularProgressIndicator(),
                               ),
                             )
-                          ] else if (factState is FactLoaded) ...[
+                          ] else if (factState is FactsLoaded) ...[
                             Container(
                               padding: const EdgeInsets.all(10),
                               width: 300,
@@ -78,7 +78,7 @@ class _FactsScreenState extends State<FactsScreen> {
                               child: Column(
                                 children: [
                                   Text(
-                                    'Created at ${factState.fact.createdAt}',
+                                    'Created at ${factState.facts[factState.facts.length - 1].createdAt}',
                                   ),
                                   Expanded(
                                     child: SingleChildScrollView(
@@ -88,7 +88,9 @@ class _FactsScreenState extends State<FactsScreen> {
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
-                                          factState.fact.fact,
+                                          factState
+                                              .facts[factState.facts.length - 1]
+                                              .fact,
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
@@ -134,7 +136,7 @@ class _FactsScreenState extends State<FactsScreen> {
                   onPressed: factState is FactLoading || catState is CatLoading
                       ? null
                       : () => {
-                            Navigator.pushReplacementNamed(
+                            Navigator.pushNamed(
                               context,
                               AppRoutes.factsHistoryScreen,
                             )

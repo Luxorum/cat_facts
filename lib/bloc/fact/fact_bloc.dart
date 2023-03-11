@@ -17,7 +17,7 @@ class FactBloc extends Bloc<FactEvent, FactState> {
       try {
         final Fact fact = await factRepository.fetchFactFromApi();
         await factRepository.saveFact(fact);
-        emit(FactLoaded(fact: fact));
+        emit(FactsLoaded(facts: [fact]));
       } catch (e) {
         String message;
         if (e is DioError) {
