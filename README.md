@@ -9,7 +9,7 @@ For `main` branch I also configured automatic deployment of Flutter Web applicat
 ## Getting Started
 
 1. Clone this project.
-2. Run `flutter pub run build_runner build --delete-conflicting-outputs` in terminal to ensure, that all generated files are present and correct.
-3. Run it on your device.
+2. Run `flutter pub run build_runner build --delete-conflicting-outputs` in terminal.
+3. Run it on your device by executing `flutter run`.
 
 
