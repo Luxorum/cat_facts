@@ -78,7 +78,8 @@ class _FactsScreenState extends State<FactsScreen> {
                               child: Column(
                                 children: [
                                   Text(
-                                      'Created at ${factState.fact.createdAt}'),
+                                    'Created at ${factState.fact.createdAt}',
+                                  ),
                                   Expanded(
                                     child: SingleChildScrollView(
                                       child: Align(
