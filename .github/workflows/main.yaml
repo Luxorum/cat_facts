@@ -39,3 +39,5 @@ jobs:
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter analyze
       - uses: bluefireteam/flutter-gh-pages@v7
+        with:
+          baseHref: /cat_facts/
